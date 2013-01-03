@@ -1,5 +1,6 @@
 package com.saybot.plants.consts
 {
+	import com.saybot.plants.states.LoadingView;
 	import com.saybot.plants.states.MainMenuView;
 	import com.saybot.plants.states.PlayfieldView;
 	import com.saybot.plants.states.SplashView;
@@ -16,6 +17,8 @@ package com.saybot.plants.consts
 		
 		public static var MAINMENU:String = "mainmenu";
 		
+		public static var LOADING:String = "loading";
+		
 		public static var GAME:String = "game";
 		
 		
@@ -23,6 +26,7 @@ package com.saybot.plants.consts
 		public static function initialize():void {
 			states[SPLASH] = [SplashView];
 			states[MAINMENU] = [MainMenuView];
+			states[LOADING] = [LoadingView];
 			states[GAME] = [PlayfieldView];
 		}
 		

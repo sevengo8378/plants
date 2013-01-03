@@ -49,9 +49,35 @@ package com.saybot
             return sTextures[name];
         }
 		
-		public static function prepareSounds():void
+		public static function getTextureAtlas(textureName:String, xmlName:String):TextureAtlas
+		{
+			if (sTextureAtlas == null)
+			{
+				var texture:Texture = getTexture(textureName);
+				var xml:XML = XML(create(xmlName));
+				sTextureAtlas = new TextureAtlas(texture, xml);
+			}
+			
+			return sTextureAtlas;
+		}
+		
+		public static function prepareCommonSounds():void
 		{
 			sSounds["Click"] = create("Click");   
+		}
+		
+		public static function loadSound(name:String):void {
+			sSounds[name] = create(name);
+		}
+		
+		public static function unloadSound(name:String):void {
+			var snd:Sound = sSounds[name] as Sound;
+			try {
+				snd.close();
+				delete sSounds[name];
+			}catch(e:Error) {
+				trace("Sound Error: "+name);
+			}
 		}
         
         public static function getSound(name:String):Sound
@@ -59,18 +85,6 @@ package com.saybot
             var sound:Sound = sSounds[name] as Sound;
             if (sound) return sound;
             else throw new ArgumentError("Sound not found: " + name);
-        }
-        
-        public static function getTextureAtlas(textureName:String, xmlName:String):TextureAtlas
-        {
-            if (sTextureAtlas == null)
-            {
-                var texture:Texture = getTexture(textureName);
-                var xml:XML = XML(create(xmlName));
-                sTextureAtlas = new TextureAtlas(texture, xml);
-            }
-            
-            return sTextureAtlas;
         }
         
         public static function loadBitmapFonts():void
@@ -83,6 +97,10 @@ package com.saybot
                 sBitmapFontsLoaded = true;
             }
         }
+		
+		public static function getXML(xmlName:String):XML {
+			return XML(create(xmlName));
+		}
 		
 		public static function getSWF(name:String):* {
 			return create(name);

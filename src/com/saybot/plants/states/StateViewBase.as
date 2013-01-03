@@ -7,7 +7,7 @@ package com.saybot.plants.states
 	
 	public class StateViewBase extends Sprite
 	{
-		public function StateViewBase()
+		public function StateViewBase(initOption:Object=null)
 		{
 			super();
 		}
@@ -20,6 +20,9 @@ package com.saybot.plants.states
 		
 		public function get starlingMain():StarlingMain {
 			return this.parent as StarlingMain;
+		}
+		
+		public function toggleDebugInfo(val:Boolean):void {
 		}
 	}
 }

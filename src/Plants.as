@@ -52,7 +52,7 @@ package
 			
 			mStarling.simulateMultitouch  = false;
 			mStarling.enableErrorChecking = false;
-			mStarling.showStats = true;
+			mStarling.showStats = false;
 			mStarling.start();
 			// When the game becomes inactive, we pause Starling; otherwise, the enter frame event
 			// would report a very long 'passedTime' when the app is reactivated. 

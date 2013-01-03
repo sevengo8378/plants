@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<levels_config>
+	<zombie name="pogo" armature="Zombie_pogo" hp="100" speed="8" attack="50" intelligence="50" ox="0" oy="-4" scale="0.45" class_name="PtyZombie"/>
+	<zombie name="digger" armature="Zombie_digger" hp="100" speed="5" attack="60" intelligence="60" ox="0" oy="0" scale="0.45" class_name="PtyZombie"/>
+	
+	<bullet name="bullet1" display="bullet10000" speedX="100" speedY="0" class_name="PtyBullet" />
+	<bullet name="bullet2" display="bullet20000" speedX="150" speedY="0" class_name="PtyBullet" />
+	
+	<plant name="chomper" armature="Chomper" hp="100" skill="bite" attack="70" ox="0" oy="18" scale="0.5" cooldown="1.5" price="80" class_name="PtyPlant"/>
+	<plant name="fume_shroom" armature="FumeShroom" hp="100" skill="shoot" attack="50" ox="0" oy="4" scale="0.5" cooldown="1" price="80" bullet="bullet1" key_bone="DoomShroom_tip" class_name="PtyPlant"/>
+	<plant name="jalapeno" armature="Jalapeno" hp="100"skill="explode" attack="100" ox="0" oy="0" scale="0.5" cooldown="1.5" price="80" class_name="PtyPlant"/>
+	<plant name="puff_shroom" armature="PuffShroom" hp="100" skill="shoot" attack="30" ox="-18" oy="-28" scale="0.8" cooldown="1.5" price="80" bullet="bullet2" key_bone="PuffShroom_tip" class_name="PtyPlant"/>
+	
+	<level id="0" name="level0" bg="PlayField" music="crazydave" init_shushine="100" class_name="PtyLevel">
+		<round id="0" delay="1.5" class_name="PtyRound" >
+			<enemy lane="0" name="pogo_001" type="pogo" delay="0" class_name="ZombieInstance" />
+			<enemy lane="3" name="pogo_002" type="pogo" delay="4" class_name="ZombieInstance" />
+			<enemy lane="1" name="digger_001" type="digger" delay="5" class_name="ZombieInstance" />
+			<enemy lane="2" name="digger_002" type="digger" delay="5" class_name="ZombieInstance" />
+			<enemy lane="4" name="pogo_003" type="pogo" delay="6" class_name="ZombieInstance" />
+		</round>
+		<round id="1" delay="2" class_name="PtyRound" >
+			<enemy lane="3" name="digger_003" type="digger" delay="0" class_name="ZombieInstance" />
+		</round>
+	</level>
+</levels_config>

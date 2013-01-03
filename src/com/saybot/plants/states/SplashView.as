@@ -3,8 +3,9 @@ package com.saybot.plants.states
 	import com.saybot.AssetsMgr;
 	import com.saybot.GameConst;
 	import com.saybot.ScreenDef;
-	import com.saybot.mgr.AssetsMgr;
+	import com.saybot.AssetsMgr;
 	import com.saybot.plants.consts.GameState;
+	import com.saybot.plants.game.LevelData;
 	
 	import flash.display.TriangleCulling;
 	import flash.events.MouseEvent;
@@ -33,7 +34,7 @@ package com.saybot.plants.states
 		
 		override public function doEnter():void {
 			
-			var bg:Image = new Image(AssetsMgr.getTexture("Background"));
+			var bg:Image = new Image(AssetsMgr.getTexture("Splash"));
 			bg.blendMode = BlendMode.NONE;
 			this.addChild(bg);
 			
@@ -50,9 +51,10 @@ package com.saybot.plants.states
 		
 		private function initCommonLoading():void {
 			// prepare assets
-			AssetsMgr.prepareSounds();
+			AssetsMgr.prepareCommonSounds();
 			AssetsMgr.loadBitmapFonts();
-			setTimeout(showContinueText, 800);
+//			setTimeout(showContinueText, 800);
+			setTimeout(start, 100);
 		}
 		
 		private function showContinueText():void {
@@ -63,17 +65,25 @@ package com.saybot.plants.states
 			txt.hAlign = HAlign.CENTER;
 			addChild(txt);
 			txt.addEventListener(TouchEvent.TOUCH, function(evt:TouchEvent):void {
-				if (evt.getTouch(txt, TouchPhase.ENDED))
-					starlingMain.switchState(GameState.GAME);
+				if (evt.getTouch(txt, TouchPhase.ENDED)) {
+					start();
+				}
 			});
 			
-			var delayedCall:DelayedCall = new DelayedCall(blinkContinueText, 0.5);
+			delayedCall = new DelayedCall(blinkContinueText, 0.5);
 			delayedCall.repeatCount = int.MAX_VALUE;
 			Starling.juggler.add(delayedCall);
 		}
 		
 		private function blinkContinueText():void {
 			txt.visible = !txt.visible
+		}
+		
+		private function start():void {
+			var levelData:LevelData = new LevelData();
+			levelData.level = 0;
+			levelData.plants = ["chomper", "fume_shroom", "jalapeno", "puff_shroom"];
+			starlingMain.switchState(GameState.LOADING, levelData);
 		}
 	}
 }
