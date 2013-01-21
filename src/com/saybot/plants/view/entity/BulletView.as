@@ -2,6 +2,7 @@ package com.saybot.plants.view.entity
 {
 	import com.saybot.AssetsMgr;
 	import com.saybot.GameConst;
+	import com.saybot.ScreenDef;
 	import com.saybot.plants.vo.BulletInstance;
 	import com.saybot.plants.vo.Entity;
 	import com.saybot.plants.vo.PlantInstance;
@@ -28,6 +29,7 @@ package com.saybot.plants.view.entity
 			super.advanceTime(time);
 			this.updateMove(time);
 			this.checkCollision();
+			this.checkScreenBound();
 		}
 		
 		protected function updateMove(time:Number):void {
@@ -53,6 +55,15 @@ package com.saybot.plants.view.entity
 					AssetsMgr.getSound("Click").play();
 					break;
 				}
+			}
+		}
+		
+		protected function checkScreenBound():void {
+			if(!this.colBox)
+				return;
+			if(colBox.left+colBox.width<0 || colBox.right > ScreenDef.GameWidth) {
+				trace("bullet out of scrren");
+				playfield.removeBullet(this);
 			}
 		}
 		

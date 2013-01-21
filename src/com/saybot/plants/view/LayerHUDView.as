@@ -6,12 +6,15 @@ package com.saybot.plants.view
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
+	import starling.events.TouchEvent;
+	import starling.events.TouchPhase;
 	import starling.text.TextField;
 	import starling.utils.HAlign;
 	
 	public class LayerHUDView extends LayerViewBase
 	{
 		private var sunTxt:TextField;
+		
 		
 		public function LayerHUDView(sceneView:PlayfieldView)
 		{
@@ -32,6 +35,18 @@ package com.saybot.plants.view
 			sunTxt.y = 30;
 //			sunTxt.border = true;
 			this.addChild(sunTxt);
+			
+			var plantCardImg:Image = new Image(playfield.gameRes.uiTextureAtlas.getTexture("plant_card0000"));
+			this.addChild(plantCardImg);
+			plantCardImg.x = 44;
+			plantCardImg.y = 5;
+			
+//			this.addEventListener(TouchEvent.TOUCH, function(evt:TouchEvent):void {
+//				if (evt.getTouch(this, TouchPhase.ENDED) == null) 
+//					return;
+//				var name:String = _levelData.plants[int(Math.random()*_levelData.plants.length)];
+//				addPlant(name);
+//			});
 		}
 		
 		public function updateSunshine(val:Number):void {

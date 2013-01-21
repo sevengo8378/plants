@@ -127,6 +127,21 @@ package com.saybot.plants.states
 			return true;
 		}
 		
+		public function addPlant(name:String):void {
+			var ptyData:PtyPlant = _levelData.getPlantPtyByName(name);
+			var plantInstance:PlantInstance = new PlantInstance();
+			plantInstance.name = ptyData.name + "_"+ totalPlants;
+			plantInstance.ptyData = ptyData;
+			plantInstance.lane = Math.random()*GameConst.LANE_CNT;
+			var armature:Armature = _gameRes.getPlant(plantInstance.name, ptyData.armature);
+			var plantView:PlantView = new PlantView(plantInstance, armature);
+			plantView.y = ScreenDef.MARGIN_TOP + (plantInstance.lane+1)*ScreenDef.LANE_HEIGHT - plantView.height;
+			layerEntity.addChild(plantView);
+			_activePlants.push(plantView);
+			totalPlants++;
+			trace("new plant " + name + " at lane " +plantInstance.lane);
+		}
+		
 		private function initLayers():void {
 			var layer:Sprite;
 			var layersCls:Array = [LayerBgView, LayerHUDView, LayerEntityView, Sprite, Sprite]
@@ -135,23 +150,6 @@ package com.saybot.plants.states
 				layer = layerCls == Sprite ? new layerCls() : new layerCls(this);
 				this.addChild(layer);
 			}
-			this.layerHUD.addEventListener(TouchEvent.TOUCH, function(evt:TouchEvent):void {
-				if (evt.getTouch(layerHUD, TouchPhase.ENDED) == null) 
-					return;
-				var name:String = _levelData.plants[int(Math.random()*_levelData.plants.length)];
-				var ptyData:PtyPlant = _levelData.getPlantPtyByName(name);
-				var plantInstance:PlantInstance = new PlantInstance();
-				plantInstance.name = ptyData.name + "_"+ totalPlants;
-				plantInstance.ptyData = ptyData;
-				plantInstance.lane = Math.random()*GameConst.LANE_CNT;
-				var armature:Armature = _gameRes.getPlant(plantInstance.name, ptyData.armature);
-				var plantView:PlantView = new PlantView(plantInstance, armature);
-				plantView.y = ScreenDef.MARGIN_TOP + (plantInstance.lane+1)*ScreenDef.LANE_HEIGHT - plantView.height;
-				layerEntity.addChild(plantView);
-				_activePlants.push(plantView);
-				totalPlants++;
-				trace("new plant " + name + " at lane " +plantInstance.lane);
-			});
 		}
 		
 		override public function toggleDebugInfo(val:Boolean):void {
