@@ -8,8 +8,11 @@ package com.saybot
 		public static const CenterX:int = GameWidth / 2;
 		public static const CenterY:int = GameHeight / 2;
 		
-		public static const MARGIN_TOP:int = 40;
-		public static const MARGIN_BOTTOM:int = 20;
+		public static const MARGIN_TOP:int = 60;
+		public static const MARGIN_BOTTOM:int = 30;
 		public static const LANE_HEIGHT:Number = (ScreenDef.GameHeight - MARGIN_TOP - MARGIN_BOTTOM) / GameConst.LANE_CNT;
+		
+		public static const GRID_W:int = 40;
+		public static const GRID_H:int = LANE_HEIGHT;
 	}
 }

@@ -62,7 +62,7 @@ package com.saybot.plants.view.entity
 			if(!this.colBox)
 				return;
 			if(colBox.left+colBox.width<0 || colBox.right > ScreenDef.GameWidth) {
-				trace("bullet out of scrren");
+//				trace("bullet out of scrren");
 				playfield.removeBullet(this);
 			}
 		}

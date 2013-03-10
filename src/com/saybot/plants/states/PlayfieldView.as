@@ -17,6 +17,10 @@ package com.saybot.plants.states
 	import com.saybot.plants.vo.PtyPlant;
 	import com.saybot.plants.vo.PtyRound;
 	import com.saybot.plants.vo.ZombieInstance;
+	import com.saybot.utils.GraphicsCanvas;
+	
+	import flash.utils.clearTimeout;
+	import flash.utils.setTimeout;
 	
 	import dragonBones.Armature;
 	
@@ -26,6 +30,9 @@ package com.saybot.plants.states
 	import starling.events.Event;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
+	import starling.text.TextField;
+	import starling.utils.HAlign;
+	import starling.utils.VAlign;
 
 	public class PlayfieldView extends StateViewBase
 	{
@@ -42,16 +49,19 @@ package com.saybot.plants.states
 		public var totalBullets:uint;
 		
 		private var _gameCtrl:GameCtrl;
-		
 		private var _sunshineVal:int;
+		
+		private var _centerTxt:TextField;
+		private var _centerTxtTid:int;
+		
 		public function PlayfieldView(initOption:Array)
 		{
+			super();
 			_levelData = initOption[0] as LevelData;
 			_ptyLevel = _levelData.crtLevel
 			_gameRes = initOption[1] as GameRes;
 			_gameCtrl = new GameCtrl();
 			_sunshineVal = _ptyLevel.init_shushine;
-			super();
 		}
 		
 		override public function doEnter():void {
@@ -76,6 +86,10 @@ package com.saybot.plants.states
 			trace("sunshine");
 			_sunshineVal += 25;
 			this.layerHUD.updateSunshine(_sunshineVal);
+		}
+		
+		public function get sunshine():int {
+			return _sunshineVal;
 		}
 		
 		private function startRound():void {
@@ -127,12 +141,12 @@ package com.saybot.plants.states
 			return true;
 		}
 		
-		public function addPlant(name:String):void {
+		public function addPlant(name:String, lane:int):PlantView {
 			var ptyData:PtyPlant = _levelData.getPlantPtyByName(name);
 			var plantInstance:PlantInstance = new PlantInstance();
 			plantInstance.name = ptyData.name + "_"+ totalPlants;
 			plantInstance.ptyData = ptyData;
-			plantInstance.lane = Math.random()*GameConst.LANE_CNT;
+			plantInstance.lane = lane;
 			var armature:Armature = _gameRes.getPlant(plantInstance.name, ptyData.armature);
 			var plantView:PlantView = new PlantView(plantInstance, armature);
 			plantView.y = ScreenDef.MARGIN_TOP + (plantInstance.lane+1)*ScreenDef.LANE_HEIGHT - plantView.height;
@@ -140,6 +154,7 @@ package com.saybot.plants.states
 			_activePlants.push(plantView);
 			totalPlants++;
 			trace("new plant " + name + " at lane " +plantInstance.lane);
+			return plantView;
 		}
 		
 		private function initLayers():void {
@@ -150,6 +165,23 @@ package com.saybot.plants.states
 				layer = layerCls == Sprite ? new layerCls() : new layerCls(this);
 				this.addChild(layer);
 			}
+			_centerTxt = new TextField(ScreenDef.GameWidth, ScreenDef.GameHeight, "", "Desyrel", 60);
+			_centerTxt.hAlign = HAlign.CENTER;
+			_centerTxt.vAlign = VAlign.CENTER;
+		}
+		
+		public function showCenterTxt(msg:String, duration:int, callback:Function=null, color:uint=0xff0000, size:int=50):void {
+			_centerTxt.text = msg;
+			_centerTxt.color = color;
+			_centerTxt.fontSize = size;
+			this.addChild(_centerTxt);
+			var finishFunc:Function = function ():void {
+				clearTimeout(_centerTxtTid);
+				_centerTxt.removeFromParent();
+				if(callback)
+					callback.call();
+			};
+			_centerTxtTid = setTimeout(finishFunc, duration);
 		}
 		
 		override public function toggleDebugInfo(val:Boolean):void {
@@ -163,6 +195,10 @@ package com.saybot.plants.states
 		
 		public function get layerHUD():LayerHUDView {
 			return getLayer(GameConst.LAYER_HUD) as LayerHUDView;
+		}
+		
+		public function get layerBg():LayerBgView {
+			return getLayer(GameConst.LAYER_BG) as LayerBgView;
 		}
 		
 		public function get layerEntity():LayerEntityView {

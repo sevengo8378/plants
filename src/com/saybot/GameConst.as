@@ -6,7 +6,7 @@ package com.saybot
 		{
 		}
 		
-		public static const LOADING_DELAY_FRAMES:int = 2;
+		public static const LOADING_DELAY_FRAMES:int = 1;
 		
 		public static const LANE_CNT:int = 5;
 		

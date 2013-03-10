@@ -10,7 +10,7 @@ package com.saybot
 		[Embed(source = "/textures/2x/splash.png")]
 		public static const Splash:Class;
 		
-		[Embed(source = "/textures/2x/background_rotate.png")]
+		[Embed(source = "/textures/2x/playfield.png")]
 		public static const PlayField:Class;
 		
 		[Embed(source="/fonts/2x/desyrel.fnt", mimeType="application/octet-stream")]

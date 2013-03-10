@@ -82,7 +82,7 @@ package com.saybot.plants.states
 		private function start():void {
 			var levelData:LevelData = new LevelData();
 			levelData.level = 0;
-			levelData.plants = ["chomper", "fume_shroom", "jalapeno", "puff_shroom"];
+			levelData.plants = ["chomper", "fumeshroom", "jalapeno", "puffshroom"];
 			starlingMain.switchState(GameState.LOADING, levelData);
 		}
 	}

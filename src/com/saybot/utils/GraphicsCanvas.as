@@ -10,21 +10,25 @@ package com.saybot.utils
 	public class GraphicsCanvas extends Image
 	{
 		private var _bmd:BitmapData;
+		private var _bmdTpl:BitmapData;
 		
 		private var _canvas:Sprite;
+		
 		
 		public function GraphicsCanvas(w:Number, h:Number)
 		{
 			_bmd = new BitmapData(w, h, true, 0);
+			_bmdTpl = _bmd.clone();
 			_canvas = new Sprite();
 			_canvas.width = _bmd.width;
 			_canvas.height = _bmd.height;
 			super(refreshCanvas());
 		}
 		
-		public function refreshCanvas(clear:Boolean=false):Texture {
-//			if(this.texture)
-//				this.texture.dispose();
+		public function refreshCanvas():Texture {
+			if(this.texture)
+				this.texture.dispose();
+			_bmd = _bmdTpl.clone();
 			_bmd.draw(_canvas);
 			var tex:Texture = Texture.fromBitmapData(_bmd, false, false); 
 			if(this.texture) {
@@ -44,8 +48,8 @@ package com.saybot.utils
 			_canvas.graphics.lineTo(toX, toY);
 		}
 		
-		public function fillRect(x:Number, y:Number, w:Number, h:Number, color:uint):void {
-			_canvas.graphics.beginFill(color);
+		public function fillRect(x:Number, y:Number, w:Number, h:Number, color:uint, alpha=1.0):void {
+			_canvas.graphics.beginFill(color, alpha);
 			_canvas.graphics.drawRect(x, y, w, h);
 			_canvas.graphics.endFill();
 		}

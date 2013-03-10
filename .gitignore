@@ -1,2 +1,3 @@
 bin-debug
 .DS_Store
+/bin-release-temp
