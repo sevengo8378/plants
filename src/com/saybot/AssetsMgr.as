@@ -63,7 +63,10 @@ package com.saybot
 		
 		public static function prepareCommonSounds():void
 		{
-			sSounds["Click"] = create("Click");   
+			sSounds[GameConst.SFX_CLICK] = create(GameConst.SFX_CLICK);
+			sSounds[GameConst.SFX_EXPLODE] = create(GameConst.SFX_EXPLODE);
+			sSounds[GameConst.SFX_PLANT_BITE] = create(GameConst.SFX_PLANT_BITE);
+			sSounds[GameConst.SFX_SHOOT_HURT] = create(GameConst.SFX_SHOOT_HURT);
 		}
 		
 		public static function loadSound(name:String):void {
@@ -105,7 +108,7 @@ package com.saybot
 		public static function getSWF(name:String):* {
 			return create(name);
 		}
-        
+		
         private static function create(name:String):Object
         {
             var assetsClass:Class = sContentScaleFactor == 1 ? AssetEmbeds_1x : AssetEmbeds_2x;

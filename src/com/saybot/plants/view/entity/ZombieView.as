@@ -2,6 +2,7 @@ package com.saybot.plants.view.entity
 {
 	import com.saybot.GameConst;
 	import com.saybot.ScreenDef;
+	import com.saybot.plants.interfaces.IActor;
 	import com.saybot.plants.vo.Entity;
 	import com.saybot.plants.vo.ZombieInstance;
 	
@@ -10,12 +11,14 @@ package com.saybot.plants.view.entity
 	
 	import starling.display.DisplayObject;
 	
-	public class ZombieView extends SkeletonView
+	public class ZombieView extends SkeletonView implements IActor
 	{
+		private var _hp:int;
 		
 		public function ZombieView(vo:Entity, armature:Armature)
 		{
 			super(vo, armature);
+			this._hp = zombieData.ptyData.hp;
 			display.scaleX = display.scaleY = zombieData.ptyData.scale;
 			display.x = zombieData.ptyData.ox*display.scaleX;
 			display.y = zombieData.ptyData.oy*display.scaleY;
@@ -75,5 +78,16 @@ package com.saybot.plants.view.entity
 				this.x -= time * speedX;
 		}
 		
+		public function hurt(value:int):void {
+			_hp -= value;
+			if(_hp <= 0)
+				this.switchState(GameConst.ZOMBIE_DIE);
+		}
+		
+		public function get attack():int {
+			return this.zombieData.ptyData.attack;
+		}
+		
+		public function get hp():int { return _hp; }
 	}
 }

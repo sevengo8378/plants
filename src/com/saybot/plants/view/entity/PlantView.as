@@ -1,27 +1,29 @@
 package com.saybot.plants.view.entity
 {
+	import com.saybot.AssetsMgr;
 	import com.saybot.GameConst;
-	import com.saybot.ScreenDef;
 	import com.saybot.plants.game.PlantSkill;
+	import com.saybot.plants.interfaces.IActor;
 	import com.saybot.plants.vo.BulletInstance;
 	import com.saybot.plants.vo.Entity;
 	import com.saybot.plants.vo.PlantInstance;
 	import com.saybot.plants.vo.PtyBullet;
 	import com.saybot.plants.vo.PtyPlant;
-	import com.saybot.plants.vo.ZombieInstance;
 	
 	import dragonBones.Armature;
 	import dragonBones.Bone;
 	import dragonBones.events.AnimationEvent;
-	import dragonBones.objects.Node;
 	
 	import starling.display.DisplayObject;
 	
-	public class PlantView extends SkeletonView
+	public class PlantView extends SkeletonView implements IActor
 	{
+		private var _hp:int;
+		
 		public function PlantView(vo:Entity, armature:Armature)
 		{
 			super(vo, armature);
+			_hp = plantData.ptyData.hp;
 			display.scaleX = display.scaleY = plantData.ptyData.scale;
 			display.x = plantData.ptyData.ox*display.scaleX;
 			display.y = plantData.ptyData.oy*display.scaleY;
@@ -36,8 +38,12 @@ package com.saybot.plants.view.entity
 			var ptyData:PtyPlant = plantData.ptyData;
 			switch(state) {
 				case GameConst.PLANT_IDLE:
-					if(hasSkill(PlantSkill.SHOOT) && stateLastTime > ptyData.cooldown) {
-						switchState(GameConst.PLANT_SHOOTING);
+					if(stateLastTime > ptyData.cooldown) {
+						if(hasSkill(PlantSkill.SHOOT))
+							switchState(GameConst.PLANT_SHOOTING);
+						else if(hasSkill(PlantSkill.EXPLODE)) {
+							switchState(GameConst.PLANT_EXPLODE);
+						}
 					}
 					break;
 			}
@@ -48,6 +54,8 @@ package com.saybot.plants.view.entity
 				if(evt.movementID == "anim_shooting") {
 					switchState(GameConst.PLANT_IDLE);
 					shootBullet();
+				} else if(evt.movementID == "anim_explode") {
+					playfield.removePlant(this);
 				}
 			}
 //			trace(this.plantData.name + " armature event: " + evt.type + ", animation: " + evt.movementID);
@@ -61,6 +69,11 @@ package com.saybot.plants.view.entity
 			switch(state) {
 				case GameConst.PLANT_SHOOTING:
 					this.speedX = 0;
+					break;
+				
+				case GameConst.PLANT_EXPLODE:
+					this.playParticleEffect("explode", 15, 5, 500);
+					AssetsMgr.getSound(GameConst.SFX_EXPLODE).play();
 					break;
 			}
 		}
@@ -91,5 +104,16 @@ package com.saybot.plants.view.entity
 			return skill == plantData.ptyData.skill;
 		}
 		
+		public function hurt(value:int):void {
+			_hp -= value;
+//			if(_hp <= 0)
+//				this.switchState(GameConst.ZOMBIE_DIE);
+		}
+		
+		public function get attack():int {
+			return this.plantData.ptyData.attack;
+		}
+		
+		public function get hp():int { return _hp; }
 	}
 }

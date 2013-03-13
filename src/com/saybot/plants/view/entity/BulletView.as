@@ -3,17 +3,16 @@ package com.saybot.plants.view.entity
 	import com.saybot.AssetsMgr;
 	import com.saybot.GameConst;
 	import com.saybot.ScreenDef;
+	import com.saybot.plants.interfaces.IActor;
 	import com.saybot.plants.vo.BulletInstance;
 	import com.saybot.plants.vo.Entity;
-	import com.saybot.plants.vo.PlantInstance;
-	import com.saybot.plants.vo.ZombieInstance;
 	import com.saybot.utils.CollisionUtil;
 	
 	import starling.display.Image;
 	
 	public class BulletView extends EntityViewBase
 	{
-		public var owner:EntityViewBase;
+		public var owner:IActor;
 		
 		public function BulletView(vo:Entity)
 		{
@@ -50,9 +49,9 @@ package com.saybot.plants.view.entity
 			}
 			for each(entiView in targets) {
 				if(CollisionUtil.checkCol(this.colBox, entiView.colBox)) {
-					entiView.switchState(GameConst.ZOMBIE_DIE);
+					(entiView as IActor).hurt(this.owner.attack);
 					playfield.removeBullet(this);
-					AssetsMgr.getSound("Click").play();
+					AssetsMgr.getSound(GameConst.SFX_SHOOT_HURT).play();
 					break;
 				}
 			}

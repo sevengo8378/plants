@@ -28,7 +28,16 @@ package com.saybot
 		
 		// sounds
 		[Embed(source="/audio/click.mp3")]
-		public static const Click:Class;
+		public static const SFX_CLICK:Class;
+		
+		[Embed(source="/audio/explode.mp3")]
+		public static const SFX_EXPLODE:Class;
+		
+		[Embed(source="/audio/plant_bite.mp3")]
+		public static const SFX_PLANT_BITE:Class;
+		
+		[Embed(source="/audio/shoot_hurt.mp3")]
+		public static const SFX_SHOOT_HURT:Class;
 		
 		[Embed(source="/music/crazydave.mp3")]
 		public static const crazydave:Class;
@@ -39,5 +48,11 @@ package com.saybot
 		
 		[Embed(source = "/textures/2x/zombie.swf", mimeType = "application/octet-stream")]
 		public static const SkeletonZombie:Class;
+		
+		// particle
+		[Embed(source="/textures/2x/explode.pex", mimeType="application/octet-stream")]
+		public static const EXPLODE_XML:Class;
+		[Embed(source="/textures/2x/explode.png")]
+		public static const EXPLODE_PNG:Class;
 	}
 }

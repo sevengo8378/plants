@@ -8,7 +8,7 @@
 	
 	<plant name="chomper" armature="Chomper" hp="100" skill="bite" attack="70" ox="0" oy="18" scale="0.4" cooldown="1.5" price="80" class_name="PtyPlant"/>
 	<plant name="fumeshroom" armature="FumeShroom" hp="100" skill="shoot" attack="50" ox="0" oy="16" scale="0.4" cooldown="1" price="180" bullet="bullet1" key_bone="DoomShroom_tip" class_name="PtyPlant"/>
-	<plant name="jalapeno" armature="Jalapeno" hp="100"skill="explode" attack="100" ox="0" oy="0" scale="0.4" cooldown="1.5" price="380" class_name="PtyPlant"/>
+	<plant name="jalapeno" armature="Jalapeno" hp="100"skill="explode" attack="100" ox="0" oy="0" scale="0.4" cooldown="3" price="40" class_name="PtyPlant"/>
 	<plant name="puffshroom" armature="PuffShroom" hp="100" skill="shoot" attack="30" ox="-18" oy="-28" scale="0.8" cooldown="1.5" price="580" bullet="bullet2" key_bone="PuffShroom_tip" class_name="PtyPlant"/>
 	
 	<level id="0" name="level0" bg="PlayField" music="crazydave" init_shushine="80" class_name="PtyLevel">

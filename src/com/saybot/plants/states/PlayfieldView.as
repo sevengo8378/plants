@@ -157,6 +157,18 @@ package com.saybot.plants.states
 			return plantView;
 		}
 		
+		public function removePlant(view:PlantView):Boolean {
+			var index:int = _activePlants.indexOf(view);
+			if(index < 0) {
+				trace("Error: plant not found!");
+				return false;
+			}
+			_activePlants.splice(index, 1);
+			view.parent.removeChild(view);
+			view.dispose();
+			return true;
+		}
+		
 		private function initLayers():void {
 			var layer:Sprite;
 			var layersCls:Array = [LayerBgView, LayerHUDView, LayerEntityView, Sprite, Sprite]

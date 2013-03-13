@@ -25,6 +25,12 @@ package com.saybot
 		public static const PLANT_IDLE:String = "idle";
 		public static const PLANT_SHOOTING:String = "shooting";
 		public static const PLANT_BITE:String = "bite";
+		public static const PLANT_EXPLODE:String = "explode";
+		
+		public static const SFX_CLICK:String = "SFX_CLICK";
+		public static const SFX_EXPLODE:String = "SFX_EXPLODE";
+		public static const SFX_PLANT_BITE:String = "SFX_PLANT_BITE";
+		public static const SFX_SHOOT_HURT:String = "SFX_SHOOT_HURT";
 		
 	}
 }

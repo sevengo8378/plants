@@ -4,16 +4,21 @@ package com.saybot.plants.view.entity
 	import com.saybot.plants.states.PlayfieldView;
 	import com.saybot.plants.vo.Entity;
 	import com.saybot.utils.GraphicsCanvas;
+	import com.saybot.utils.ParticleBuilder;
 	
 	import flash.geom.Rectangle;
+	import flash.utils.clearTimeout;
+	import flash.utils.setTimeout;
 	
 	import dragonBones.Armature;
 	
 	import starling.animation.IAnimatable;
+	import starling.animation.Juggler;
 	import starling.core.Starling;
 	import starling.display.DisplayObject;
 	import starling.display.Sprite;
 	import starling.events.Event;
+	import starling.extensions.PDParticleSystem;
 
 	public class EntityViewBase extends Sprite implements IAnimatable
 	{
@@ -97,6 +102,27 @@ package com.saybot.plants.view.entity
 		
 		public function get colBox():Rectangle {
 			return _colBox;
+		}
+		
+		public function playParticleEffect(name:String, ox:Number, oy:Number, duration:Number=Number.MAX_VALUE, finishCallback:Function=null):void {
+			name = name.toUpperCase();
+			var ptl:PDParticleSystem = ParticleBuilder.build(name+"_XML", name+"_PNG");
+			this.addChild(ptl);
+			ptl.x = ox;
+			ptl.y = oy;
+			ptl.emitterX = ptl.emitterY = 0;
+			Starling.juggler.add(ptl);
+			ptl.start(duration);
+			if(duration != Number.MAX_VALUE) {
+				var id:int = setTimeout(function():void {
+					clearTimeout(id);
+					ptl.removeFromParent(true);
+					Starling.juggler.remove(ptl);
+					ptl = null;
+					if(finishCallback) 
+						finishCallback.call();
+				}, duration);
+			}
 		}
 	}
 }
