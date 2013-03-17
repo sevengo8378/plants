@@ -53,8 +53,8 @@ package com.saybot.plants.states
 			// prepare assets
 			AssetsMgr.prepareCommonSounds();
 			AssetsMgr.loadBitmapFonts();
-//			setTimeout(showContinueText, 800);
-			setTimeout(start, 100);
+			setTimeout(showContinueText, 800);
+//			setTimeout(start, 100);
 		}
 		
 		private function showContinueText():void {
@@ -81,9 +81,9 @@ package com.saybot.plants.states
 		
 		private function start():void {
 			var levelData:LevelData = new LevelData();
-			levelData.level = 0;
-			levelData.plants = ["chomper", "fumeshroom", "jalapeno", "puffshroom"];
-			starlingMain.switchState(GameState.LOADING, levelData);
+			levelData.levelsConfig = AssetsMgr.getXML("LevelConfigXML");
+//			levelData.crtLevelIndex = 0
+			starlingMain.switchState(GameState.MAINMENU, levelData);
 		}
 	}
 }

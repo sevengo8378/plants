@@ -20,6 +20,8 @@ package com.saybot.plants.vo
 		public var ox:Number;
 		public var oy:Number;
 		
+		public var eatable:String;
+		
 		// optional properties
 		public var bullet:String;
 		public var key_bone:String;

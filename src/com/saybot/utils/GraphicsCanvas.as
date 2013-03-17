@@ -2,7 +2,6 @@ package com.saybot.utils
 {
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
-	import flash.geom.Rectangle;
 	
 	import starling.display.Image;
 	import starling.textures.Texture;

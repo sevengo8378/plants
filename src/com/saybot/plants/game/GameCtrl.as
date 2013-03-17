@@ -13,12 +13,17 @@ package com.saybot.plants.game
 			_pendingCalls = [];
 		}
 		
-		public function addTask(func:Function, delay:Number, args:Array=null, repeatCnt:int=1):void {
+		public function addTask(func:Function, delay:Number, args:Array=null, repeatCnt:int=1):DelayedCall {
 			var delayedCall:DelayedCall = new DelayedCall(func, delay, args);
 			delayedCall.repeatCount = repeatCnt;
 			delayedCall.addEventListener(Event.REMOVE_FROM_JUGGLER, selfRemoveFromjuggler);
 			Starling.juggler.add(delayedCall);
 			_pendingCalls.push(delayedCall);
+			return delayedCall;
+		}
+		
+		public function removeTask(delayedCall:DelayedCall):void {
+			Starling.juggler.remove(delayedCall);
 		}
 		
 		private function selfRemoveFromjuggler(evt:Event):void {
@@ -32,6 +37,7 @@ package com.saybot.plants.game
 		
 		public function removeAllTasks():void {
 			for each(var delayedCall:DelayedCall in _pendingCalls) {
+				delayedCall.removeEventListeners(Event.REMOVE_FROM_JUGGLER);
 				Starling.juggler.remove(delayedCall);
 			}
 			_pendingCalls = [];

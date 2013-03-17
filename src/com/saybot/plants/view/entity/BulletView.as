@@ -25,6 +25,8 @@ package com.saybot.plants.view.entity
 		}
 		
 		override public function advanceTime(time:Number):void {
+			if(_isPaused)
+				return;
 			super.advanceTime(time);
 			this.updateMove(time);
 			this.checkCollision();
@@ -39,21 +41,11 @@ package com.saybot.plants.view.entity
 		}
 		
 		protected function checkCollision():void {
-//			trace("bullet check collision: "+this.bulletData.name);
-			var originTargets:Array = this.owner is PlantView ? playfield.activeZombies : playfield.activePlants;
-			var targets:Array = [];
-			var entiView:EntityViewBase;
-			for each(entiView in originTargets) {
-				if(Object(entiView.vo).lane == this.bulletData.lane)
-					targets.push(entiView);
-			}
-			for each(entiView in targets) {
-				if(CollisionUtil.checkCol(this.colBox, entiView.colBox)) {
-					(entiView as IActor).hurt(this.owner.attack);
-					playfield.removeBullet(this);
-					AssetsMgr.getSound(GameConst.SFX_SHOOT_HURT).play();
-					break;
-				}
+			var colEntiView:EntityViewBase = this.getColEntity(this.owner is PlantView ? playfield.activeZombies : playfield.activePlants);
+			if(colEntiView) {
+				(colEntiView as IActor).hurt(this.owner.attack);
+				playfield.removeBullet(this);
+				AssetsMgr.getSound(GameConst.SFX_SHOOT_HURT).play();
 			}
 		}
 		

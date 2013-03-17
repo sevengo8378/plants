@@ -7,5 +7,10 @@ package com.saybot.plants.interfaces
 		function get hp():int;
 		
 		function get attack():int;
+		
+		function setDead():void;
+		
+		function isDead():Boolean;
+		
 	}
 }

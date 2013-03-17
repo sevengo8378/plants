@@ -29,8 +29,11 @@ package com.saybot.plants.view.entity
 		}
 		
 		override public function advanceTime(time:Number):void {
+			if(_isPaused)
+				return;
 			stateLastTime += time;
-			armature.update();
+			if(armature)
+				armature.update();
 			super.advanceTime(time);
 		}
 		

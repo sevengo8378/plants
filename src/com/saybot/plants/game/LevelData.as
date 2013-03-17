@@ -13,8 +13,6 @@ package com.saybot.plants.game
 	{
 		public var level:int;
 		
-		public var plants:Array; 
-		
 		private var _levelConfig:XML;
 		
 		private var _crtLevel:PtyLevel;
@@ -22,6 +20,7 @@ package com.saybot.plants.game
 		private var _zombiesPtyData:Dictionary;
 		private var _plantsPtyData:Dictionary;
 		private var _bulletsPtyData:Dictionary;
+		public var levels:Vector.<PtyLevel>
 		
 		public function LevelData()
 		{
@@ -31,13 +30,27 @@ package com.saybot.plants.game
 			return _crtLevel;
 		}
 		
+		public function set crtLevelIndex(index:int):void {
+			for each(var level:PtyLevel in levels) {
+				if(level.id == index)
+					_crtLevel = level;
+//					_crtLevel = ValueObjectBase.translateObject2VO(XML2JSON.parse(_levelConfig.level.(@id == level))) as PtyLevel;
+			}
+		}
+		
 		public function set levelsConfig(xml:XML):void {
 			_levelConfig = xml;
 			XML2JSON.arrays = ["level", "zombie", "round", "plant", "enemy"];
 			var jsonData:Object = XML2JSON.parse(_levelConfig);
-			_crtLevel = ValueObjectBase.translateObject2VO(XML2JSON.parse(_levelConfig.level.(@id == level))) as PtyLevel;
-			var obj:*;
 			var pty:ValueObjectBase;
+			var obj:*;
+			
+			levels = new Vector.<PtyLevel>;
+			for each(obj in jsonData.level) {
+				pty = ValueObjectBase.translateObject2VO(obj) as PtyLevel;
+				levels.push(pty as PtyLevel); 
+			}
+			
 			_zombiesPtyData = new Dictionary();
 			for each(obj in jsonData.zombie) {
 				pty = ValueObjectBase.translateObject2VO(obj) as ValueObjectBase;

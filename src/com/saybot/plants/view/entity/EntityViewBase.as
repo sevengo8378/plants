@@ -1,8 +1,12 @@
 package com.saybot.plants.view.entity
 {
+	import com.saybot.AssetsMgr;
+	import com.saybot.GameConst;
 	import com.saybot.plants.StarlingMain;
+	import com.saybot.plants.interfaces.IActor;
 	import com.saybot.plants.states.PlayfieldView;
 	import com.saybot.plants.vo.Entity;
+	import com.saybot.utils.CollisionUtil;
 	import com.saybot.utils.GraphicsCanvas;
 	import com.saybot.utils.ParticleBuilder;
 	
@@ -40,6 +44,8 @@ package com.saybot.plants.view.entity
 		protected var _colBox:Rectangle;
 		protected var _keepColBox:Boolean = false;
 		
+		protected var _isPaused:Boolean;
+		
 		public function EntityViewBase(vo:Entity)
 		{
 			this.vo = vo;
@@ -60,6 +66,8 @@ package com.saybot.plants.view.entity
 		}
 		
 		public function advanceTime(time:Number):void {
+			if(_isPaused)
+				return;
 			updateCollisionBox();
 		}
 		
@@ -104,6 +112,25 @@ package com.saybot.plants.view.entity
 			return _colBox;
 		}
 		
+		protected function getColEntity(originTargets:Array, sameLane:Boolean=true):EntityViewBase {
+			var targets:Array = [];
+			var entiView:EntityViewBase;
+			if(sameLane) {
+				for each(entiView in originTargets) {
+					if(Object(entiView.vo).lane == Object(this.vo).lane)
+						targets.push(entiView);
+				}
+			} else {
+				targets = originTargets;
+			}
+			for each(entiView in targets) {
+				if(CollisionUtil.checkCol(this.colBox, entiView.colBox)) {
+					return entiView;
+				}
+			}
+			return null;
+		}
+		
 		public function playParticleEffect(name:String, ox:Number, oy:Number, duration:Number=Number.MAX_VALUE, finishCallback:Function=null):void {
 			name = name.toUpperCase();
 			var ptl:PDParticleSystem = ParticleBuilder.build(name+"_XML", name+"_PNG");
@@ -124,5 +151,11 @@ package com.saybot.plants.view.entity
 				}, duration);
 			}
 		}
+		
+		public function dist2Entity(enti:EntityViewBase):Number {
+			return Math.abs(this.x - enti.x)
+		}
+		
+		public function set isPaused(val:Boolean):void { _isPaused = val; }
 	}
 }

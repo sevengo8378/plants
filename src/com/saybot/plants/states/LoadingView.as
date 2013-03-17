@@ -71,9 +71,9 @@ package com.saybot.plants.states
 		}
 		
 		private function loadBg(evt:starling.events.Event):void {
-			_levelData.levelsConfig = AssetsMgr.getXML("LevelConfigXML");
+//			_levelData.levelsConfig = AssetsMgr.getXML("LevelConfigXML");
 			_gameRes.bg = new Image(AssetsMgr.getTexture(_levelData.crtLevel.bg as String))
-			_gameRes.uiTextureAtlas = com.saybot.AssetsMgr.getTextureAtlas("UIPNG", "UIXml");
+			_gameRes.uiTextureAtlas = AssetsMgr.getTextureAtlas("UIPNG", "UIXml");
 			AssetsMgr.loadSound(_levelData.crtLevel.music);
 			updatePercent(0.2);
 			this.removeEventListeners(starling.events.Event.ENTER_FRAME);

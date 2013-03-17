@@ -39,6 +39,9 @@ package com.saybot
 		[Embed(source="/audio/shoot_hurt.mp3")]
 		public static const SFX_SHOOT_HURT:Class;
 		
+		[Embed(source="/audio/zombie_eat.mp3")]
+		public static const SFX_ZOMBIE_EAT:Class;
+		
 		[Embed(source="/music/crazydave.mp3")]
 		public static const crazydave:Class;
 		

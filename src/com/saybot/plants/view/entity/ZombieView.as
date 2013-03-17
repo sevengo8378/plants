@@ -1,7 +1,7 @@
 package com.saybot.plants.view.entity
 {
+	import com.saybot.AssetsMgr;
 	import com.saybot.GameConst;
-	import com.saybot.ScreenDef;
 	import com.saybot.plants.interfaces.IActor;
 	import com.saybot.plants.vo.Entity;
 	import com.saybot.plants.vo.ZombieInstance;
@@ -9,11 +9,15 @@ package com.saybot.plants.view.entity
 	import dragonBones.Armature;
 	import dragonBones.events.AnimationEvent;
 	
-	import starling.display.DisplayObject;
-	
 	public class ZombieView extends SkeletonView implements IActor
 	{
+		public static const EVT_ZOMBIE_ESCAPE:String = "evt_zombie_success";
+		
 		private var _hp:int;
+		
+		private var _attackTarget:PlantView;
+		
+		private var _escaped:Boolean;
 		
 		public function ZombieView(vo:Entity, armature:Armature)
 		{
@@ -29,13 +33,23 @@ package com.saybot.plants.view.entity
 		}
 		
 		override public function advanceTime(time:Number):void {
-			super.advanceTime(time);
+			if(_isPaused)
+				return;
 			this.updateAI(time);
 			this.updateMove(time);
+			super.advanceTime(time);
 		}
 		
 		protected function updateAI(time:Number):void {
+			if(isDead())
+				return;
 			var intelligence:Number = zombieData.ptyData.intelligence;
+			var plant:PlantView = this.getColEntity(playfield.activePlants) as PlantView;
+			if(plant && this.dist2Entity(plant) < 24 && plant.plantData.ptyData.eatable == "true" && plant.x < this.x) {
+				_attackTarget = plant;
+				switchState(GameConst.ZOMBIE_EAT);
+				return;
+			}
 			switch(state) {
 				case GameConst.ZOMBIE_IDLE:
 					if(Math.random() * 100 > 100-intelligence && stateLastTime*Math.random()*2 > (100-intelligence)*0.25)
@@ -61,13 +75,23 @@ package com.saybot.plants.view.entity
 				case GameConst.ZOMBIE_WALK:
 					this.speedX = zombieData.ptyData.speed;
 					break;
+				
+				case GameConst.ZOMBIE_EAT:
+					this.speedX = 0;
+					break;
 			}
 		}
 		
 		override protected function armatureEventHandler(evt:AnimationEvent):void {
-			if(evt.type == AnimationEvent.COMPLETE) {
+			if(evt.type == AnimationEvent.COMPLETE || evt.type == AnimationEvent.LOOP_COMPLETE) {
 				if(evt.movementID == "anim_death") {
-					playfield.removeZombie(this);
+					setDead();
+				} else if(evt.movementID == "anim_eat") {
+					_attackTarget.hurt(this.attack);
+					AssetsMgr.getSound(GameConst.SFX_ZOMBIE_EAT).play();
+					if(_attackTarget.hp <= 0) {
+						switchState(GameConst.ZOMBIE_IDLE);
+					}
 				}
 			}
 //			trace(this.plantData.name + " armature event: " + evt.type + ", animation: " + evt.movementID);
@@ -76,6 +100,11 @@ package com.saybot.plants.view.entity
 		protected function updateMove(time:Number):void {
 			if(speedX != 0)
 				this.x -= time * speedX;
+			
+			if(this.colBox.right < 0 && !_escaped) {
+				_escaped = true;
+				this.dispatchEventWith(EVT_ZOMBIE_ESCAPE, true, this);
+			}
 		}
 		
 		public function hurt(value:int):void {
@@ -89,5 +118,12 @@ package com.saybot.plants.view.entity
 		}
 		
 		public function get hp():int { return _hp; }
+		
+		public function setDead():void {
+			playfield.removeZombie(this);
+		}
+		public function isDead():Boolean {
+			return hp <= 0;
+		}
 	}
 }

@@ -3,6 +3,7 @@ package com.saybot.plants.view
 	import com.saybot.AssetsMgr;
 	import com.saybot.GameConst;
 	import com.saybot.ScreenDef;
+	import com.saybot.plants.interfaces.IActor;
 	import com.saybot.plants.states.PlayfieldView;
 	import com.saybot.plants.view.entity.PlantView;
 	import com.saybot.utils.GraphicsCanvas;
@@ -87,7 +88,7 @@ package com.saybot.plants.view
 					stopGridSelect();
 					playfield.layerHUD.crtSelectCard.selected = false;
 				} else {
-					playfield.showCenterTxt("Invalid Position!", 500, null, 0xff0000, 40);
+					playfield.showCenterTxt("Illegal Position!", 500, null, 0xff0000, 40);
 				}
 			}
 		}
@@ -102,10 +103,13 @@ package com.saybot.plants.view
 		
 		public function gridSetEntity(gridX:int, gridY:int, entity:PlantView):void {
 			_gridEntities[getGridKey(gridX, gridY)] = entity;
+			entity.gridX = gridX;
+			entity.gridY = gridY;
 		}
 		
 		public function gridRemoveEntity(gridX:int, gridY:int):void {
 			delete _gridEntities[getGridKey(gridX, gridY)];
+			refreshGrids();
 		}
 		
 		public function toggleDebugInfo(val:Boolean):void {

@@ -68,5 +68,13 @@ package com.saybot.plants.view.components
 			_selected = val;
 			_canvas.visible = _selected;
 		}
+		
+		override public function dispose():void {
+			_grayFilter.dispose();
+			_grayFilter = null;
+			_canvas.dispose();
+			_canvas = null;
+			super.dispose();
+		}
 	}
 }

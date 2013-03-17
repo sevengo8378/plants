@@ -63,10 +63,9 @@ package com.saybot
 		
 		public static function prepareCommonSounds():void
 		{
-			sSounds[GameConst.SFX_CLICK] = create(GameConst.SFX_CLICK);
-			sSounds[GameConst.SFX_EXPLODE] = create(GameConst.SFX_EXPLODE);
-			sSounds[GameConst.SFX_PLANT_BITE] = create(GameConst.SFX_PLANT_BITE);
-			sSounds[GameConst.SFX_SHOOT_HURT] = create(GameConst.SFX_SHOOT_HURT);
+			for each(var sfx:String in GameConst.SFX_ALL) {
+				sSounds[sfx] = create(sfx);
+			}
 		}
 		
 		public static function loadSound(name:String):void {

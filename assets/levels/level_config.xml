@@ -1,26 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <levels_config>
-	<zombie name="pogo" armature="Zombie_pogo" hp="100" speed="8" attack="50" intelligence="50" ox="0" oy="-4" scale="0.35" class_name="PtyZombie"/>
-	<zombie name="digger" armature="Zombie_digger" hp="100" speed="5" attack="60" intelligence="60" ox="0" oy="0" scale="0.35" class_name="PtyZombie"/>
+	<zombie name="pogo" armature="Zombie_pogo" hp="80" speed="10" attack="40" intelligence="50" ox="0" oy="-4" scale="0.35" class_name="PtyZombie"/>
+	<zombie name="digger" armature="Zombie_digger" hp="150" speed="13" attack="60" intelligence="60" ox="0" oy="0" scale="0.35" class_name="PtyZombie"/>
 	
 	<bullet name="bullet1" display="bullet10000" speedX="100" speedY="0" class_name="PtyBullet" />
 	<bullet name="bullet2" display="bullet20000" speedX="150" speedY="0" class_name="PtyBullet" />
 	
-	<plant name="chomper" armature="Chomper" hp="100" skill="bite" attack="70" ox="0" oy="18" scale="0.4" cooldown="1.5" price="80" class_name="PtyPlant"/>
-	<plant name="fumeshroom" armature="FumeShroom" hp="100" skill="shoot" attack="50" ox="0" oy="16" scale="0.4" cooldown="1" price="180" bullet="bullet1" key_bone="DoomShroom_tip" class_name="PtyPlant"/>
-	<plant name="jalapeno" armature="Jalapeno" hp="100"skill="explode" attack="100" ox="0" oy="0" scale="0.4" cooldown="3" price="40" class_name="PtyPlant"/>
-	<plant name="puffshroom" armature="PuffShroom" hp="100" skill="shoot" attack="30" ox="-18" oy="-28" scale="0.8" cooldown="1.5" price="580" bullet="bullet2" key_bone="PuffShroom_tip" class_name="PtyPlant"/>
+	<plant name="puffshroom" armature="PuffShroom" hp="200" skill="shoot" attack="15" ox="-18" oy="-10" scale="0.8" cooldown="1.5" price="70" bullet="bullet2" eatable="true" key_bone="PuffShroom_tip" class_name="PtyPlant"/>
+	<plant name="fumeshroom" armature="FumeShroom" hp="200" skill="shoot" attack="30" ox="0" oy="28" scale="0.4" cooldown="1" price="150" bullet="bullet1" eatable="true" key_bone="DoomShroom_tip" class_name="PtyPlant"/>
+	<plant name="chomper" armature="Chomper" hp="100" skill="bite" attack="1000" ox="0" oy="25" scale="0.4" cooldown="1.5" price="200" eatable="true" class_name="PtyPlant"/>
+	<plant name="jalapeno" armature="Jalapeno" hp="100"skill="explode" attack="200" ox="0" oy="20" scale="0.4" cooldown="3" price="220" eatable="false" class_name="PtyPlant"/>
+	<plant name="marigold" armature="Marigold" hp="100"skill="sun" attack="0" ox="-10" oy="10" scale="0.5" cooldown="3" price="30" eatable="true" class_name="PtyPlant"/>
 	
-	<level id="0" name="level0" bg="PlayField" music="crazydave" init_shushine="80" class_name="PtyLevel">
-		<round id="0" delay="1.5" class_name="PtyRound" >
+	<level id="0" name="level1" bg="PlayField" music="crazydave" init_shushine="100" sunshine_delay="7.0" plantsStr="marigold,puffshroom" class_name="PtyLevel">
+		<round id="0" delay="8" class_name="PtyRound" >
 			<enemy lane="0" name="pogo_001" type="pogo" delay="0" class_name="ZombieInstance" />
-			<enemy lane="3" name="pogo_002" type="pogo" delay="4" class_name="ZombieInstance" />
-			<enemy lane="1" name="digger_001" type="digger" delay="5" class_name="ZombieInstance" />
-			<enemy lane="2" name="digger_002" type="digger" delay="5" class_name="ZombieInstance" />
-			<enemy lane="4" name="pogo_003" type="pogo" delay="6" class_name="ZombieInstance" />
+			<enemy lane="2" name="digger_001" type="digger" delay="5" class_name="ZombieInstance" />
+		</round>
+	</level>
+	<level id="1" name="level2" bg="PlayField" music="crazydave" init_shushine="100" sunshine_delay="7.0" plantsStr="marigold,puffshroom,fumeshroom" class_name="PtyLevel">
+		<round id="0" delay="8" class_name="PtyRound" >
+			<enemy lane="0" name="pogo_001" type="pogo" delay="0" class_name="ZombieInstance" />
+			<enemy lane="2" name="digger_001" type="digger" delay="5" class_name="ZombieInstance" />
 		</round>
 		<round id="1" delay="2" class_name="PtyRound" >
+			<enemy lane="0" name="pogo_002" type="pogo" delay="4" class_name="ZombieInstance" />
+			<enemy lane="1" name="digger_002" type="digger" delay="5" class_name="ZombieInstance" />
 			<enemy lane="3" name="digger_003" type="digger" delay="0" class_name="ZombieInstance" />
+			<enemy lane="4" name="pogo_003" type="pogo" delay="6" class_name="ZombieInstance" />
+		</round>
+		<round id="2" delay="3" class_name="PtyRound" >
+			<enemy lane="0" name="pogo_004" type="pogo" delay="1" class_name="ZombieInstance" />
+			<enemy lane="1" name="digger_004" type="digger" delay="1" class_name="ZombieInstance" />
+			<enemy lane="2" name="digger_005" type="digger" delay="1" class_name="ZombieInstance" />
+			<enemy lane="3" name="digger_005" type="digger" delay="1" class_name="ZombieInstance" />
+			<enemy lane="4" name="pogo_005" type="pogo" delay="1" class_name="ZombieInstance" />
+			<enemy lane="2" name="digger_006" type="digger" delay="4" class_name="ZombieInstance" />
+			<enemy lane="3" name="pogo_006" type="pogo" delay="4" class_name="ZombieInstance" />
+		</round>
+	</level>
+	<level id="2" name="level3" bg="PlayField" music="crazydave" init_shushine="100" sunshine_delay="7.0" plantsStr="marigold,puffshroom,fumeshroom,chomper,jalapeno" class_name="PtyLevel">
+		<round id="0" delay="8" class_name="PtyRound" >
+			<enemy lane="0" name="pogo_001" type="pogo" delay="0" class_name="ZombieInstance" />
+			<enemy lane="2" name="digger_001" type="digger" delay="5" class_name="ZombieInstance" />
+		</round>
+		<round id="1" delay="2" class_name="PtyRound" >
+			<enemy lane="0" name="pogo_002" type="pogo" delay="4" class_name="ZombieInstance" />
+			<enemy lane="1" name="digger_002" type="digger" delay="5" class_name="ZombieInstance" />
+			<enemy lane="3" name="digger_003" type="digger" delay="0" class_name="ZombieInstance" />
+			<enemy lane="4" name="pogo_003" type="pogo" delay="6" class_name="ZombieInstance" />
+		</round>
+		<round id="2" delay="3" class_name="PtyRound" >
+			<enemy lane="0" name="pogo_004" type="pogo" delay="1" class_name="ZombieInstance" />
+			<enemy lane="1" name="digger_004" type="digger" delay="1" class_name="ZombieInstance" />
+			<enemy lane="2" name="digger_005" type="digger" delay="1" class_name="ZombieInstance" />
+			<enemy lane="3" name="digger_005" type="digger" delay="1" class_name="ZombieInstance" />
+			<enemy lane="4" name="pogo_005" type="pogo" delay="1" class_name="ZombieInstance" />
+			<enemy lane="2" name="digger_006" type="digger" delay="4" class_name="ZombieInstance" />
+			<enemy lane="3" name="pogo_006" type="pogo" delay="4" class_name="ZombieInstance" />
+			<enemy lane="3" name="digger_007" type="digger" delay="4" class_name="ZombieInstance" />
+			<enemy lane="4" name="pogo_007" type="pogo" delay="4" class_name="ZombieInstance" />
+		</round>
+		<round id="3" delay="6" class_name="PtyRound" >
+			<enemy lane="0" name="pogo_008" type="pogo" delay="1" class_name="ZombieInstance" />
+			<enemy lane="1" name="digger_008" type="digger" delay="1" class_name="ZombieInstance" />
+			<enemy lane="2" name="digger_009" type="digger" delay="1" class_name="ZombieInstance" />
+			<enemy lane="3" name="digger_010" type="digger" delay="1" class_name="ZombieInstance" />
+			<enemy lane="4" name="pogo_009" type="pogo" delay="1" class_name="ZombieInstance" />
+			<enemy lane="1" name="digger_011" type="digger" delay="3" class_name="ZombieInstance" />
+			<enemy lane="2" name="pogo_010" type="pogo" delay="3" class_name="ZombieInstance" />
+			<enemy lane="3" name="digger_012" type="digger" delay="3" class_name="ZombieInstance" />
+			<enemy lane="4" name="pogo_011" type="pogo" delay="3" class_name="ZombieInstance" />
+			<enemy lane="0" name="digger_013" type="digger" delay="5" class_name="ZombieInstance" />
+			<enemy lane="1" name="pogo_012" type="pogo" delay="5" class_name="ZombieInstance" />
+			<enemy lane="2" name="digger_014" type="digger" delay="5" class_name="ZombieInstance" />
+		</round>
+		<round id="4" delay="3" class_name="PtyRound" >
+			<enemy lane="0" name="pogo_013" type="pogo" delay="1" class_name="ZombieInstance" />
+			<enemy lane="1" name="digger_015" type="digger" delay="1" class_name="ZombieInstance" />
+			<enemy lane="2" name="digger_016" type="digger" delay="1" class_name="ZombieInstance" />
+			<enemy lane="3" name="digger_017" type="digger" delay="1" class_name="ZombieInstance" />
+			<enemy lane="4" name="pogo_014" type="pogo" delay="1" class_name="ZombieInstance" />
+			<enemy lane="1" name="digger_018" type="digger" delay="2" class_name="ZombieInstance" />
+			<enemy lane="2" name="pogo_015" type="pogo" delay="2" class_name="ZombieInstance" />
+			<enemy lane="3" name="digger_019" type="digger" delay="2" class_name="ZombieInstance" />
+			<enemy lane="4" name="pogo_016" type="pogo" delay="2" class_name="ZombieInstance" />
+			<enemy lane="0" name="digger_020" type="digger" delay="4" class_name="ZombieInstance" />
+			<enemy lane="1" name="pogo_017" type="pogo" delay="4" class_name="ZombieInstance" />
+			<enemy lane="2" name="digger_021" type="digger" delay="4" class_name="ZombieInstance" />
+			<enemy lane="2" name="digger_022" type="digger" delay="7" class_name="ZombieInstance" />
+			<enemy lane="3" name="pogo_018" type="pogo" delay="7" class_name="ZombieInstance" />
+			<enemy lane="4" name="digger_023" type="digger" delay="7" class_name="ZombieInstance" />
 		</round>
 	</level>
 </levels_config>

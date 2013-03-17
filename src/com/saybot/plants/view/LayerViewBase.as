@@ -6,6 +6,8 @@ package com.saybot.plants.view
 	
 	public class LayerViewBase extends Sprite
 	{
+		protected var _paused:Boolean;
+		
 		protected var playfield:PlayfieldView;
 		
 		public function LayerViewBase(sceneView:PlayfieldView)
@@ -13,5 +15,10 @@ package com.saybot.plants.view
 			this.playfield = sceneView;
 			super();
 		}
+		
+		public function setPaused(val:Boolean):void {
+			_paused = val;
+		}
+		
 	}
 }

@@ -38,11 +38,8 @@
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/automation_agent.swc" useDefaultLinkType="false"/>
         </excludedEntries>
       </libraryPathEntry>
-      <libraryPathEntry kind="1" linkType="1" path="libs"/>
     </libraryPath>
-    <sourceAttachmentPath>
-      <sourceAttachmentPathEntry kind="3" linkType="1" path="/Users/byrne/project/Plants/libs/starling.swc" sourcepath="/Users/byrne/project/saybot-game-demo/libsrc/starling" useDefaultLinkType="false"/>
-    </sourceAttachmentPath>
+    <sourceAttachmentPath/>
   </compiler>
   <applications>
     <application path="Plants.as">
@@ -54,7 +51,7 @@
   <buildCSSFiles/>
   <flashCatalyst validateFlashCatalystCompatibility="false"/>
   <buildTargets>
-    <buildTarget buildTargetName="device" iosSettingsVersion="2" isCurrent="true" platformId="com.adobe.flexide.multiplatform.ios.platform" provisioningFile="/Users/byrne/Documents/saybot_ios_develop/saybot_ios_development.mobileprovision" releasePackageType="">
+    <buildTarget buildTargetName="device" iosSettingsVersion="2" isCurrent="true" platformId="com.adobe.flexide.multiplatform.ios.platform" provisioningFile="/Users/byrne/Documents/saybot_ios_develop/saybot_ios_development.mobileprovision" releasePackageType="ipa-ad-hoc">
       <airSettings airCertificatePath="/Users/byrne/Documents/saybot_ios_develop/saybot_ios_development.p12" airTimestamp="true" anePathSet="true" version="1">
         <airExcludes/>
         <anePaths/>
@@ -67,15 +64,19 @@
       <actionScriptSettings version="1"/>
     </buildTarget>
     <buildTarget airDownloadURL="https://market.android.com/details?id=com.adobe.air" androidSettingsVersion="2" buildTargetName="device" isCurrent="true" platformId="com.adobe.flexide.multiplatform.android.platform">
-      <airSettings airCertificatePath="/Users/byrne/Documents/saybot_ios_develop/saybot_ios_development.p12" airTimestamp="true" anePathSet="true" version="1">
-        <airExcludes/>
+      <multiPlatformSettings enabled="true" hideAneLibSymbols="0" includePlatformLibs="false" platformID="com.adobe.flexide.multiplatform.android.platform" reducedSizePackaging="false" version="1"/>
+      <airSettings airCertificatePath="/Users/byrne/project/plants/release/signature.p12" airTimestamp="true" anePathSet="true" version="1">
+        <airExcludes>
+          <pathEntry path="music"/>
+          <pathEntry path="p"/>
+          <pathEntry path="textures/1x"/>
+        </airExcludes>
         <anePaths/>
         <newLaunchParams/>
         <modifiedLaunchParams/>
         <newPackagingParams/>
         <modifiedPackagingParams/>
       </airSettings>
-      <multiPlatformSettings enabled="true" hideAneLibSymbols="0" includePlatformLibs="false" platformID="com.adobe.flexide.multiplatform.android.platform" reducedSizePackaging="false" version="1"/>
       <actionScriptSettings version="1"/>
     </buildTarget>
     <buildTarget buildTargetName="default" isCurrent="true" platformId="default">
