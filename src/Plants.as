@@ -29,6 +29,7 @@ package
 			Starling.multitouchEnabled = true; // useful on mobile devices
 			Starling.handleLostContext = true; // required on Android
 			
+			
 			// create a suitable viewport for the screen size
 			var viewPort:Rectangle = new Rectangle();
 			if (stage.fullScreenWidth / stage.fullScreenHeight > 1.5)
@@ -56,10 +57,10 @@ package
 			mStarling.start();
 			// When the game becomes inactive, we pause Starling; otherwise, the enter frame event
 			// would report a very long 'passedTime' when the app is reactivated. 
-			NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE, 
-				function (e:Event):void { mStarling.start(); });
-			NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, 
-				function (e:Event):void { mStarling.stop(); });
+//			NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE, 
+//				function (e:Event):void { mStarling.start(); });
+//			NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, 
+//				function (e:Event):void { mStarling.stop(); });
 		}
 	}
 }

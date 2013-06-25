@@ -1,3 +1,6 @@
-bin-debug
+bin-debug/
+bin-release/
 .DS_Store
 /bin-release-temp
+target/
+lib/

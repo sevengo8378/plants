@@ -5,6 +5,7 @@ package com.saybot.plants.view.entity
 	import com.saybot.utils.GraphicsCanvas;
 	
 	import dragonBones.Armature;
+	import dragonBones.animation.WorldClock;
 	import dragonBones.events.AnimationEvent;
 	
 	import starling.display.DisplayObject;
@@ -17,6 +18,7 @@ package com.saybot.plants.view.entity
 		{
 			this.armature = armature;
 			this.display = armature.display as DisplayObject;
+			WorldClock.clock.add(armature);
 			super(vo);
 			switchState(GameConst.ZOMBIE_IDLE);
 			armature.addEventListener(AnimationEvent.MOVEMENT_CHANGE, armatureEventHandler);
@@ -32,19 +34,21 @@ package com.saybot.plants.view.entity
 			if(_isPaused)
 				return;
 			stateLastTime += time;
-			if(armature)
-				armature.update();
+			WorldClock.clock.advanceTime(time);
 			super.advanceTime(time);
 		}
 		
 		override public function dispose():void {
 			super.dispose();
-			armature.removeEventListener(AnimationEvent.MOVEMENT_CHANGE, armatureEventHandler);
-			armature.removeEventListener(AnimationEvent.START, armatureEventHandler);
-			armature.removeEventListener(AnimationEvent.COMPLETE, armatureEventHandler);
-			armature.removeEventListener(AnimationEvent.LOOP_COMPLETE, armatureEventHandler);
-//			armature.dispose(); //can't disposs armature, other zombies use the same data
-			armature = null;
+			if(armature) {
+				WorldClock.clock.remove(armature);
+				armature.removeEventListener(AnimationEvent.MOVEMENT_CHANGE, armatureEventHandler);
+				armature.removeEventListener(AnimationEvent.START, armatureEventHandler);
+				armature.removeEventListener(AnimationEvent.COMPLETE, armatureEventHandler);
+				armature.removeEventListener(AnimationEvent.LOOP_COMPLETE, armatureEventHandler);
+	//			armature.dispose(); //can't disposs armature, other zombies use the same data
+				armature = null;
+			}
 		}
 	}
 }

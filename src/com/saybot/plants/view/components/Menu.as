@@ -47,7 +47,7 @@ package com.saybot.plants.view.components
 			mi.addEventListener(TouchEvent.TOUCH, function(evt:TouchEvent):void {
 				var touch:Touch = evt.getTouch(mi);
 				if(touch && touch.phase == TouchPhase.ENDED)
-					this.dispatchEventWith(EVT_MENU_ITEM_CLICK, true, miName);
+					dispatchEventWith(EVT_MENU_ITEM_CLICK, true, miName);
 			});
 		}
 	}

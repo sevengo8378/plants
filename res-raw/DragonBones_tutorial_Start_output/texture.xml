@@ -1,0 +1,14 @@
+<TextureAtlas name="DragonBones_tutorial_Start" width="512" height="512">
+ <SubTexture name="parts/handR" pX="0" pY="0" width="49" height="29" x="50" y="199"/>
+ <SubTexture name="parts/armR" pX="0" pY="0" width="23" height="39" x="127" y="199"/>
+ <SubTexture name="parts/armUpperR" pX="0" pY="0" width="80" height="47" x="424" y="152"/>
+ <SubTexture name="parts/legR" pX="0" pY="0" width="90" height="116" x="332" y="141"/>
+ <SubTexture name="parts/tail" pX="0" pY="-63.8" width="108" height="139" x="332" y="0"/>
+ <SubTexture name="parts/head" pX="0" pY="0" width="210" height="197" x="0" y="0"/>
+ <SubTexture name="parts/body" pX="0" pY="0" width="118" height="174" x="212" y="0"/>
+ <SubTexture name="parts/legL" pX="0" pY="0" width="102" height="90" x="212" y="176"/>
+ <SubTexture name="parts/handL" pX="0" pY="0" width="48" height="39" x="0" y="199"/>
+ <SubTexture name="parts/armL" pX="0" pY="0" width="24" height="40" x="101" y="199"/>
+ <SubTexture name="parts/armUpperL" pX="0" pY="0" width="56" height="43" x="442" y="107"/>
+ <SubTexture name="parts/tailTip" pX="0" pY="0" width="56" height="105" x="442" y="0"/>
+</TextureAtlas>

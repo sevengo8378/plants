@@ -61,7 +61,7 @@ package com.saybot.plants.game
 				_plants = null;
 			}
 			if(_zombies) {
-				for(var d:String in _zombies) {
+				for(d in _zombies) {
 					(_zombies[d] as Armature).dispose();
 					delete _zombies[d];
 				}

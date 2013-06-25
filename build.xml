@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="plants" basedir="." default="build-app" xmlns:ivy="antlib:org.apache.ivy.ant">
+	<property environment="env"/>
+	<property file="${env.ASHOLE_HOME}/conf/ashole.properties"/>
+    <property file="build.properties" />
+	<import file="${ashole.antmodule.dir}/common.xml" />
+    <import file="${ashole.antmodule.dir}/compile-common.xml" />
+    <property name="FLEX_HOME" value="${flex.home}" />
+    <taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar" />
+
+    <property name="tmp.dir" value="${deploy.path}/tmp" />
+    <property name="pack.dir" value="${deploy.path}/package" />
+    <property name="pack.res.dir" value="${pack.dir}/resources" />
+    <property name="cert" value="${basedir}/release/signature.p12" />
+    <property name="cert.passwd" value="123123" />
+
+	<target name="init-ivy">
+		<ivy:settings id="fetch.settings" file="${ashole.config.dir}/ivysettings.xml"/>
+		<ivy:settings id="pub.settings" file="${ashole.config.dir}/pub2private-ivysettings.xml"/>
+    </target>
+
+    <target name="check-sdk">
+        <fail unless="FLEX_HOME">FLEX_HOME must be set</fail>
+        <fail unless="air.home">air.home must be set</fail>
+        <echo message="use flex.home=${FLEX_HOME}, air.home=${air.home}" />
+    </target>
+
+    <target name="pre-build">
+        <mkdir dir="${deploy.path}" />
+        <mkdir dir="${tmp.dir}" />
+        <antcall target ="copy-assets">
+            <param name="from" value="${assets.path}" />
+            <param name="to" value="${tmp.dir}" />
+        </antcall>
+    </target>
+    <target name="pre-pack">
+        <mkdir dir="${pack.dir}" />
+        <mkdir dir="${pack.res.dir}" />
+        <antcall target ="copy-assets">
+            <param name="from" value="${assets.path}" />
+            <param name="to" value="${pack.res.dir}" />
+        </antcall>
+    </target>
+
+    <target name="copy-assets">
+        <sync todir="${to}" includeEmptyDirs="true" overwrite="true">
+            <fileset dir="${from}" />
+        </sync>
+    </target>
+
+    <target name="build-app" depends="check-sdk, pre-build">
+		<antcall target="compile-swf">
+			<param name="config.file" value="${air.home}/frameworks/airmobile-config.xml" />
+			<param name="target.dir" value="${tmp.dir}" />
+            <param name="target.name" value="${app.name}.swf" />
+            <param name="src.dir" value="${src.path}" />
+            <param name="assets.dir" value="${assets.path}" />
+            <param name="main.class" value="${app.name}.as" />
+            <param name="lib.dir" value="${lib.path}" />
+            <param name="debug" value="${ver.debug}" />
+		</antcall>
+    </target>
+
+    <target name="build-apk" depends="check-sdk, pre-pack">
+        <echo message="copy main swf and xml file to package path" />
+        <copy overwrite="true" file="${tmp.dir}/${app.name}.swf" tofile="${pack.dir}/${app.name}.swf" />
+        <copy overwrite="true" file="${src.path}/${app.name}-app.xml" tofile="${pack.dir}/${app.name}-app.xml" />
+        <replace encoding="utf-8" file="${pack.dir}/${app.name}-app.xml">
+            <replacefilter token="[main-swf]" value="${app.name}.swf" />
+        </replace>
+        <antcall target="pack-apk" />
+    </target>
+
+    <target name="compile-swf">
+        <echo message="compiling: ${src.dir}/${main.class}" />
+        <echo message="output: ${target.dir}/${target.name}" />
+        <mxmlc file="${src.dir}/${main.class}" output="${target.dir}/${target.name}"
+            actionscript-file-encoding="UTF-8"
+            keep-generated-actionscript="false"
+            debug="${debug}"
+            verbose-stacktraces="${debug}"
+            static-link-runtime-shared-libraries="true"
+            headless-server="true"
+            incremental="true"
+        >
+            <load-config filename="${config.file}" />
+            <source-path path-element="${air.home}/frameworks" />
+            <source-path path-element="${src.dir}" />
+            <source-path path-element="${assets.dir}" />
+            <compiler.library-path dir="${lib.dir}" append="true">
+                <include name="*.swc"/>
+            </compiler.library-path>
+        </mxmlc>
+    </target>
+
+    <target name="pack-apk">
+        <echo message="apk package with adt ${adt}" />
+        <echo message="packing path: ${pack.dir}" />
+        <echo message="certificate: ${cert}" />
+        <java jar="${adt}" dir="${pack.dir}" fork="true" failonerror="true">
+            <arg line="-package" />
+            <arg line="-target apk-captive-runtime" />
+            <arg line="-storetype pkcs12" />
+            <arg line="-keystore ${cert}" />
+            <arg line="-storepass ${cert.passwd}" />
+            <arg line="${app.name}" />
+            <arg line="${app.name}-app.xml" />
+            <arg line="${app.name}.swf" />
+            <arg line="-C . resources" />
+        </java>
+    </target>
+    
+    <target name="clean">
+        <echo message="clean build generated contents..." />
+        <delete dir="${deploy.path}" />
+    </target>
+    <target name="clean-pack">
+        <echo message="clean pack generated contents..." />
+        <delete dir="${pack.dir}" />
+    </target>
+</project>
+
+
